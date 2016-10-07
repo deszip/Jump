@@ -9,11 +9,23 @@
 import Foundation
 import XcodeKit
 
+struct LineShift {
+    let command: String
+    let value: Int
+}
+
+enum ShiftCommand {
+    case up5(String, Int)
+    case down5(String, Int)
+    case up2(String, Int)
+    case down2(String, Int)
+}
+
 class SourceEditorCommand: NSObject, XCSourceEditorCommand {
-    
+
     // MARK: - XCSourceEditorCommand -
     
-    func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: (NSError?) -> Void ) -> Void {
+    public func perform(with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void) {
         let buffer = invocation.buffer
         if let insertionRange = insertionRange(buffer: buffer) {
             var shiftValue = 0
